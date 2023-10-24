@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const docker_client = useDockerClientStore()
 const table_data = reactive([])
-const get_data = async () => {
+const getData = async () => {
     table_data.splice(0, table_data.length)
     let cli_list = await docker_client.getClientList()
     cli_list.forEach(item => {
@@ -41,7 +41,7 @@ const client_form = reactive({
 
 const addClient = (async () => {
     await docker_client.addClient(client_form.name, client_form.host)
-    await get_data()
+    await getData()
     client_form.name = ""
     client_form.host = ""
 })
@@ -52,7 +52,7 @@ onMounted(async () => {
 
 
 const switchClient = ((row, a, v) => {
-    table_data.setActiveClient(row.name)
+    docker_client.setActiveClient(row.name)
     router.push({ path: `/e/${row.name}` })
 })
 </script>

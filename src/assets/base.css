@@ -1,5 +1,4 @@
 /* color palette from <https://github.com/vuejs/theme> */
-@import "./font/font.css";
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -35,7 +34,7 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
-    --el-font-weight-primary: 700;
+  --el-font-weight-primary: 700;
   --el-font-family-primary: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 

@@ -49,11 +49,11 @@ const props = defineProps({
 
 const table_data = reactive([])
 const docker_client = useDockerClientStore()
-const service = dockerClientStore.getService(props.service_id)
+const service = docker_client.getService(props.service_id)
 const current_timestamp = Date.parse(new Date()) / 1000
 
 onMounted(async () => {
-    await get_data()
+    await getData()
 })
 
 

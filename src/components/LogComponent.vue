@@ -81,7 +81,7 @@ function formatLog(ls) {
         }
         let t = format_line.indexOf(' ')
         if (t != -1) {
-            if (showTime.value) {
+            if (display_time.value) {
                 format_line = `<font color="#f56c6c">${format_line.substring(0, t).split('.')[0].replace('T', ' ')}</font> ${format_line.substring(t + 1)}`
             } else {
                 format_line = format_line.substring(t + 1)
@@ -116,10 +116,10 @@ function computeStatMetric(stat) {
 
 async function getData() {
     let data = await docker_client.fetchLog(props.cli_id, props.id, props.type, tail.value)
-    logString.value = formatLog(data)
+    log_string.value = formatLog(data)
 }
 function closeClient() {
-    sessionStore.removeClient(props.id, props.type + '.log')
+    sessions.removeClient(props.id, props.type + '.log')
 }
 
 
