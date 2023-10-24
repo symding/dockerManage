@@ -43,9 +43,9 @@ const router = createRouter({
             }
         },
         {
-            path: '/e/:cli_id/service/create',
-            name: 'CreateService',
-            component: () => import('../views/CreateService.vue'),
+            path: '/e/:cli_id/service/:service_id',
+            name: 'ServiceDetail',
+            component: () => import('../views/ServiceDetail.vue'),
             props: true,
             meta: {
                 page_type: "Service"

@@ -74,6 +74,16 @@ class Service {
         })
         return response.data
     }
+    async inspect() {
+        let response = await http.get('docker/service_inspect', {
+            method: 'get',
+            params: {
+                client_host: this.host,
+                service_id: this.id
+            },
+        })
+        return response.data
+    }
 }
 export const useDockerClientStore = defineStore('dockerClient', {
     state: () => {
@@ -82,14 +92,7 @@ export const useDockerClientStore = defineStore('dockerClient', {
                 "local": {
                     id: "local",
                     name: "local",
-                    host: "127.0.0.1:2375",
-                    api_version: "20.10.8",
-                    cpu_core_num: 8,
-                    memory: 16,
-                    swarm_info: {
-                        node_num: 12,
-                        swarm_version: "2010.8",
-                    }
+                    host: "",
                 }
             },
             activeClientId: "local",
@@ -153,11 +156,17 @@ export const useDockerClientStore = defineStore('dockerClient', {
             let response = await http.get('docker/client_list', {
                 method: 'get'
             })
+            let cli = [{
+                name: "local",
+                host: ""
+            }]
             response.data.forEach(element => {
                 element['id'] = element.name
                 this.clients[element.name] = element
+                cli.push(element)
             });
-            return response.data
+            console.log(this.clients)
+            return cli
         },
         async addClient(name, host) {
             let response = await http.post('docker/add_client ',
@@ -169,6 +178,7 @@ export const useDockerClientStore = defineStore('dockerClient', {
             return response.data
         },
         activeClient() {
+            console.log(this.activeClientId)
             return this.clients[this.activeClientId]
         },
         setActiveClient(id) {
@@ -275,7 +285,7 @@ export const useDockerClientStore = defineStore('dockerClient', {
                 method: 'get',
                 params: {
                     client_host: host,
-                    id: c_id,
+                    id: id,
                     tail: tail,
                     type: type
 

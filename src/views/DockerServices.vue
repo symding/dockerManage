@@ -1,11 +1,12 @@
 <script setup>
 import { useDockerClientStore } from '../store/dockerClient'
-import { useSessionStore } from '../store/sessionStore'
 import { onMounted, ref, reactive } from 'vue';
 import MainHeader from '../components/MainHeader.vue'
-import { useRoute, useRouter } from 'vue-router'
 import ServiceTask from '../components/ServiceTask.vue';
 import CreateService from '../views/CreateService.vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const dockerClientStore = useDockerClientStore()
 const props = defineProps({
@@ -116,7 +117,9 @@ const handleSelectionChange = async (row) => {
             <el-table-column type="selection" width="40" />
             <el-table-column label="Name" width="400">
                 <template #default="scope">
-                    <p><el-link type="primary">{{ scope.row.Name }}</el-link></p>
+                    <el-link type="primary" @click="router.push({ path: `/e/${props.cli_id}/service/${scope.row.Id}` })">{{
+                        scope.row.Name
+                    }}</el-link>
                 </template>
             </el-table-column>
             <el-table-column label="Stack">

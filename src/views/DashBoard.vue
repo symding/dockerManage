@@ -52,7 +52,7 @@ const getData = () => {
         <el-descriptions :column="1" :border="true" size="small">
             <el-descriptions-item label="Name">{{ active_client.name }}</el-descriptions-item>
             <el-descriptions-item label="Url">{{ active_client.host }}</el-descriptions-item>
-            <el-descriptions-item label="Api Version">{{ active_client.api_version }}</el-descriptions-item>
+            <!-- <el-descriptions-item label="Api Version">{{ active_client.api_version }}</el-descriptions-item>
             <el-descriptions-item label="CPU">{{ active_client.cpu_core_num }} Core</el-descriptions-item>
             <el-descriptions-item label="Memory">{{ active_client.memory }} GB</el-descriptions-item>
             <el-descriptions-item label="Swarm Info">
@@ -69,7 +69,7 @@ const getData = () => {
                     }}</el-descriptions-item>
                 </el-descriptions>
                 <p v-if="active_client.swarm_info == null">This Client is not an swarm node.</p>
-            </el-descriptions-item>
+            </el-descriptions-item> -->
         </el-descriptions>
         <div>
         </div>
