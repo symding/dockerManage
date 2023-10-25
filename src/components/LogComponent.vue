@@ -31,7 +31,6 @@ const refresh_freq = ref(10000)
 const display_time = ref(false)
 const search_text = ref('')
 const tail = ref("100")
-const percentage = ref(0)
 
 
 const searchLog = computed(() => {
@@ -48,7 +47,7 @@ onMounted(async () => {
             break
         }
         if (
-            refresh_freq == -1 ||
+            refresh_freq.value == -1 ||
             ((sessions.isDrawerOpened == false ||
                 sessions.isSelectedSession({ id: props.id, type: full_type }) == false) &&
                 sessions.backgrounRefresh == false)
@@ -56,7 +55,6 @@ onMounted(async () => {
             await new Promise(resolve => setTimeout(resolve, 1000))
             continue
         }
-
         await getData()
         // percentage.value = 0
         // let x = setInterval(() => {
@@ -139,10 +137,9 @@ function closeClient() {
             </el-form-item>
             <el-form-item label="Refresh Freq" size="small">
                 <el-select v-model="refresh_freq" clearable placeholder="Select" size="small">
+                    <el-option label="2 Seconds" :value="2000" />
                     <el-option label="5 Seconds" :value="5000" />
                     <el-option label="10 Seconds" :value="10000" />
-                    <el-option label="30 Seconds" :value="30000" />
-                    <el-option label="60 Seconds" :value="60000" />
                     <el-option label="Never" :value="-1" />
                 </el-select>
             </el-form-item>
