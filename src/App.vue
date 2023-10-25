@@ -4,7 +4,8 @@
   <div class="layout">
     <el-container>
       <el-header>
-        <h2 style="font-weight: bolder;color: white;text-align: left;line-height: 60px;width: 400px;">
+        <h2 style="font-weight: bolder;color: white;text-align: left;line-height: 60px;width: 400px;"
+          @click="router.push({ path: '/' })">
           DockerManager</h2>
         <!-- <el-select v-model="value" class="m-2" placeholder="Select">
           <el-option key="item" label="item" value="item" />
@@ -58,6 +59,8 @@ import ConsoleBoard from './components/ConsoleBoard.vue';
 import { useSessionStore } from './store/sessionStore'
 import { useDockerClientStore } from './store/dockerClient'
 import { onMounted } from "vue"
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const sessionStore = useSessionStore()
 const clientStore = useDockerClientStore()
 onMounted(async () => {

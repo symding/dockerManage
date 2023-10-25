@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HelloWorld from '../components/HelloWorld.vue'
+import ClientList from '../components/ClientList.vue'
 import { useDockerClientStore } from '../store/dockerClient'
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -7,18 +7,13 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: HelloWorld
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: HelloWorld
+            component: ClientList
         },
         {
             path: '/e/:cli_id',
             name: "ActiveClient",
 
-            component: () => import('../views/DashBoard.vue'),
+            component: () => import('../views/ClientInfo.vue'),
             props: true,
             meta: {
                 page_type: "ActiveClient"
@@ -67,6 +62,9 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     let store = useDockerClientStore()
-    store.setActiveClient(to.params.cli_id)
+    if (to.params.cli_id != undefined) {
+        store.setActiveClient(to.params.cli_id)
+    }
+
 })
 export default router

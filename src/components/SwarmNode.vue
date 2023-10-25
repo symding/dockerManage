@@ -1,15 +1,15 @@
 <template>
-    <div style="height:60vh;">
-        <el-button type="danger" size="small">Remove</el-button>
-        <el-button size="small" style="float:right;margin-left:5px;" @click="getData()">Refresh</el-button>
-        <el-table :data="table_data" size="small" style="height:calc(100% - 30px);overflow: scroll;">
+    <div>
+        <el-button type="danger">Remove</el-button>
+        <el-button style="float:right;margin-left:5px;" @click="getData()">Refresh</el-button>
+        <el-table :data="table_data" style="height:calc(100% - 30px);overflow: scroll;">
             <el-table-column type="selection" width="30" />
-            <el-table-column property="Name" label="Name" width="220" sortable />
-            <el-table-column property="Role" label="Role" width="100" sortable />
+            <el-table-column property="Name" label="Name" width="280" sortable />
+            <el-table-column property="Role" label="Role" sortable />
             <el-table-column property="Cpu" label="CPU" sortable />
-            <el-table-column property="Memory" label="Memory" width="100" sortable />
-            <el-table-column property="Addr" label="IP Addr" sortable width="120" />
-            <el-table-column property="Status" label="Status" width="100" :filters="[
+            <el-table-column property="Memory" label="Memory" sortable />
+            <el-table-column property="Addr" label="IP Addr" sortable width="280" />
+            <el-table-column property="Status" label="Status" width="120" :filters="[
                 { text: 'ready', value: 'ready' },
                 { text: 'dawn', value: 'dawn' },
             ]" />

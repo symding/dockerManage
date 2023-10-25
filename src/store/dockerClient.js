@@ -98,16 +98,6 @@ export const useDockerClientStore = defineStore('dockerClient', {
             activeClientId: "local",
             navigation: [
                 {
-                    items: [
-                        {
-                            text: "Home",
-                            index: `/e/local`,
-                            icon: 'icon-connect',
-                            page_type: "ActiveClient"
-                        }
-                    ]
-                },
-                {
                     name: "docker",
                     items: [
                         {
@@ -183,16 +173,6 @@ export const useDockerClientStore = defineStore('dockerClient', {
         },
         setActiveClient(id) {
             this.navigation = [
-                {
-                    items: [
-                        {
-                            text: "Home",
-                            index: `/e/${id}`,
-                            icon: 'icon-connect',
-                            page_type: "ActiveClient"
-                        }
-                    ]
-                },
                 {
                     name: "docker",
                     items: [
@@ -311,6 +291,16 @@ export const useDockerClientStore = defineStore('dockerClient', {
                     spec: serviceSpec
                 }
             )
+            return response.data
+        },
+        async ClientInfo() {
+            let cli = this.activeClient()
+            let response = await http.get('docker/client_info', {
+                method: 'get',
+                params: {
+                    client_host: cli.host,
+                },
+            })
             return response.data
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div style="height:60vh;">
-        <el-form :inline="true" :model="client_form" size="small">
+        <el-form :inline="true" :model="client_form">
             <el-form-item label="Name">
                 <el-input v-model="client_form.name" placeholder="name" clearable style="width: 200px;" />
             </el-form-item>
@@ -8,10 +8,10 @@
                 <el-input v-model="client_form.host" placeholder="host" clearable style="width: 200px;" />
             </el-form-item>
             <el-form-item>
-                <el-button size="small" type="primary" @click="addClient()">+ Add</el-button>
+                <el-button type="primary" @click="addClient()">+ Add</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="table_data" size="small" style="margin-bottom: 20px;" @row-click="switchClient">
+        <el-table :data="table_data" style="margin-bottom: 20px;" @row-click="switchClient">
             <el-table-column property="name" label="Name" />
             <el-table-column property="host" label="Host" />
         </el-table>
@@ -47,6 +47,7 @@ const addClient = (async () => {
 })
 
 onMounted(async () => {
+    console.log(docker_client.activeClientId)
     await getData()
 })
 

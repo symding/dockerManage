@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import MainHeader from '../components/MainHeader.vue'
 import SwarmNode from '../components/SwarmNode.vue'
 import ClientList from '../components/ClientList.vue'
@@ -13,10 +13,19 @@ const header_info = {
     router: [],
     currentName: "Client DashBoard"
 }
-const node_dialog = ref(false)
-const client_dialog = ref(false)
-const getData = () => {
-    console.log("xxx")
+
+const done = ref(false)
+const client_data = reactive({
+    info: {}
+})
+
+onMounted(async () => {
+    await getData()
+    done.value = true
+})
+
+const getData = async () => {
+    client_data.info = await docker_client.ClientInfo()
 }
 
 // function open_dialog
@@ -26,32 +35,13 @@ const getData = () => {
 <template>
     <MainHeader :header-info="header_info" />
     <div style="margin:20px 0 20px 0;height:calc(100vh - 130px);overflow: scroll;">
-        <!-- <h3 style="margin-bottom: 10px;">Resource stat</h3>
-        <el-row>
-            <el-col :span="3" class="rs-class" @click="router.push({ path: `/e/${props.cli_id}/container` })">
-                <el-statistic :value="dockerClientStore.activeClient().containers.length">
-                    <template #title>
-                        <div style="display: inline-flex; align-items: center">
-                            <strong>Container</strong>
-                        </div>
-                    </template>
-                </el-statistic>
-            </el-col>
-            <el-col :span="3" class="rs-class" @click="router.push({ path: `/e/${props.cli_id}/service` })">
-                <el-statistic :value="dockerClientStore.activeClient().services.length">
-                    <template #title>
-                        <div style="display: inline-flex; align-items: center">
-                            <strong>Service</strong>
-                        </div>
-                    </template>
-                </el-statistic>
-            </el-col>
-        </el-row>
-        <br> -->
         <h3 style="margin-bottom: 10px;">Environment Info</h3>
-        <el-descriptions :column="1" :border="true" size="small">
+        <el-descriptions :column="1" :border="true" :v-if="done">
             <el-descriptions-item label="Name">{{ active_client.name }}</el-descriptions-item>
             <el-descriptions-item label="Url">{{ active_client.host }}</el-descriptions-item>
+            <el-descriptions-item label="CPU">{{ client_data.info.NCPU }} Core</el-descriptions-item>
+            <el-descriptions-item label="Memory">{{ client_data.info.MemTotal / 1024 / 1024 / 1024 }}
+                GB</el-descriptions-item>
             <!-- <el-descriptions-item label="Api Version">{{ active_client.api_version }}</el-descriptions-item>
             <el-descriptions-item label="CPU">{{ active_client.cpu_core_num }} Core</el-descriptions-item>
             <el-descriptions-item label="Memory">{{ active_client.memory }} GB</el-descriptions-item>
@@ -74,14 +64,9 @@ const getData = () => {
         <div>
         </div>
         <br>
-        <el-button type="primary" @click="client_dialog = true"> Switch Client</el-button>
-    </div>
-    <el-dialog v-model="node_dialog" title="Node List" width="60%" :destroy-on-close="true">
+        <h3 style="margin-bottom:10px;">Node list</h3>
         <SwarmNode></SwarmNode>
-    </el-dialog>
-    <el-dialog v-model="client_dialog" title="Switch Client" width="60%" :destroy-on-close="true" @close="getData">
-        <ClientList></ClientList>
-    </el-dialog>
+    </div>
 </template>
 
 <style scoped>

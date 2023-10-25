@@ -1,8 +1,9 @@
 <script setup>
-import { ref, watch, reactive } from "vue"
 import IconRender from '../utils/svg'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useDockerClientStore } from '../store/dockerClient'
+
+const router = useRouter()
 const docker_client = useDockerClientStore()
 const route = useRoute()
 
@@ -10,10 +11,16 @@ const route = useRoute()
 
 <template>
     <div style="width:100%;height:calc(100vh - 100px);overflow: scroll;">
+        <el-link :underline="false" @click="router.push({ path: `/e/${docker_client.activeClientId}` })"
+            style="color: aliceblue;line-height: 30px;height:30px;font-size: 16px;margin-top:10px;width:100%;text-align: center;padding-right:30px;">
+            <IconRender :style="{ width: 20, height: 20 }" name="icon-env">
+            </IconRender>
+            &nbsp;{{ docker_client.activeClientId }}
+        </el-link>
         <el-menu default-active="1" :router="true">
             <el-menu-item-group :title="group.name" v-for="group in docker_client.navigation">
                 <el-menu-item :class="{ 'is-active': route.meta.page_type === item.page_type }" v-for="item in group.items"
-                    :index="item.index" :key="item.index">
+                    :index="item.index" :key="item.index" :disabled="docker_client.activeClientId == undefined">
                     <span style="margin-right:10px;line-height:30px;">
                         <IconRender :style="{ width: 15, height: 15, style: 'bottom:8px;', routeName: item.index }"
                             :name="item.icon">
