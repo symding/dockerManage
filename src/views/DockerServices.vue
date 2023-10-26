@@ -122,7 +122,7 @@ const handleSelectionChange = async (row) => {
                     }}</el-link>
                 </template>
             </el-table-column>
-            <el-table-column label="Stack">
+            <el-table-column label="Stack" width="200">
                 <template #default="scope">
                     <p v-if="scope.row.Stack"> {{ scope.row.Stack }}</p>
                     <p v-if="!scope.row.Stack"> - </p>
@@ -146,7 +146,7 @@ const handleSelectionChange = async (row) => {
                     <p v-if="scope.row.Mode.Replicated == undefined"> -/- </p>
                 </template>
             </el-table-column>
-            <el-table-column label="Image" width="250">
+            <el-table-column label="Image">
                 <template #default="scope">
                     <p>{{ scope.row.Image.split('@')[0].split('/')[2] }}</p>
                 </template>
